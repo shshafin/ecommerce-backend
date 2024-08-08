@@ -8,14 +8,8 @@ const variantValidationSchema = zod_1.z.object({
 });
 // Inventory schema
 const inventoryValidationSchema = zod_1.z.object({
-    quantity: zod_1.z
-        .number()
-        .min(0, "Inventory quantity cannot be less than 0")
-        .nonnegative("Inventory quantity is required"),
-    inStock: zod_1.z
-        .boolean()
-        .default(true)
-        .refine((val) => typeof val === "boolean", "Inventory inStock status is required"),
+    quantity: zod_1.z.number().min(0, "Inventory quantity cannot be less than 0"),
+    inStock: zod_1.z.boolean().default(true),
 });
 // Product schema
 const productValidationSchema = zod_1.z.object({
@@ -25,10 +19,7 @@ const productValidationSchema = zod_1.z.object({
         .max(100, "Product name cannot be greater than 100")
         .min(1, "Product name is required"),
     description: zod_1.z.string().trim().min(1, "Product description is required"),
-    price: zod_1.z
-        .number()
-        .min(0, "Product price cannot be less than 0")
-        .refine((val) => typeof val === "number", "Product price is required"),
+    price: zod_1.z.number().min(0, "Product price cannot be less than 0"),
     category: zod_1.z
         .string()
         .trim()
