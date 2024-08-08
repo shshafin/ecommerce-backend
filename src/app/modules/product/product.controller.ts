@@ -100,7 +100,7 @@ const deleteProduct = async (req: Request, res: Response) => {
 const updateProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    const { Product: updatedProductData } = req.body;
+    const updatedProductData = req.body;
 
     const result = await productService.updateProductIntoDB(
       productId,
