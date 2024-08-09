@@ -46,4 +46,47 @@ const productValidationSchema = z.object({
   isDelete: z.boolean().default(false),
 });
 
-export default productValidationSchema;
+const productUpdateValidationSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .max(100, "Product name cannot be greater than 100 characters")
+    .min(1, "Product name is required")
+    .optional(),
+  description: z
+    .string()
+    .trim()
+    .min(1, "Product description is required")
+    .optional(),
+  price: z
+    .number()
+    .min(0, "Product price cannot be less than 0")
+    .refine((val) => typeof val === "number", "Product price is required")
+    .optional(),
+  category: z
+    .string()
+    .trim()
+    .max(50, "Product category cannot be greater than 50 characters")
+    .min(1, "Product category is required")
+    .optional(),
+  tags: z
+    .array(
+      z
+        .string()
+        .trim()
+        .max(50, "Product tags cannot be greater than 50 characters")
+        .min(1, "Product tags are required")
+    )
+    .optional(),
+  variants: z
+    .array(variantValidationSchema)
+    .min(1, "At least one product variant is required")
+    .optional(),
+  inventory: inventoryValidationSchema.optional(),
+  isDelete: z.boolean().default(false).optional(),
+});
+
+export const productValidator = {
+  productValidationSchema,
+  productUpdateValidationSchema,
+};
